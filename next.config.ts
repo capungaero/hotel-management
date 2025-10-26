@@ -1,14 +1,28 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Optimize for production
+  compress: true,
+  poweredByHeader: false,
+  
+  // Static generation optimization
+  generateEtags: true,
+  
+  // Ensure proper chunk loading
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons']
+  },
+  
+  // Build settings
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
-    // 构建时忽略ESLint错误
     ignoreDuringBuilds: true,
   },
+  
+  // React optimization
+  reactStrictMode: true,
 };
 
 export default nextConfig;
