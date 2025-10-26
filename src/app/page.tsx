@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog'
 import { DialogFooter } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { CalendarIcon, Search, Bed, Users, DollarSign, CalendarDays, MapPin, Phone, Mail } from 'lucide-react'
@@ -313,6 +313,8 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-gray-900">Hotel Booking System</h1>
             </div>
             <nav className="flex space-x-4">
+              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Maintenance</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/housekeeping'}>Housekeeping</Button>
               <Button variant="ghost" onClick={() => window.location.href = '/config'}>Configuration</Button>
               <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Financial</Button>
             </nav>
@@ -733,6 +735,9 @@ export default function Home() {
               <CalendarDays className="h-5 w-5" />
               Booking Details for {selectedDate && format(selectedDate, 'PPP')}
             </DialogTitle>
+            <DialogDescription>
+              View and manage all bookings for the selected date
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             {selectedDateBookings.length === 0 ? (
@@ -818,6 +823,9 @@ export default function Home() {
               <CalendarDays className="h-5 w-5" />
               Create Booking for {selectedDate && format(selectedDate, 'PPP')}
             </DialogTitle>
+            <DialogDescription>
+              Select an available room and enter guest details to create a new booking
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
             {/* Available Rooms */}
@@ -973,6 +981,9 @@ export default function Home() {
               </div>
               Add New Booking
             </DialogTitle>
+            <DialogDescription className="text-blue-100">
+              Confirm creating a new booking for {selectedDate && format(selectedDate, 'PPP')}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-6 py-4">
             <div className="text-center">

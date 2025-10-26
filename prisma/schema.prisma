@@ -41,6 +41,8 @@ model Room {
   status     String   @default("available") // available, occupied, maintenance
   roomType   RoomType @relation(fields: [roomTypeId], references: [id])
   bookings   Booking[]
+  maintenanceTasks MaintenanceTask[]
+  housekeepingAssignments HousekeepingAssignment[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
@@ -103,6 +105,105 @@ model FinancialRecord {
   amount      Float
   date        DateTime
   referenceId String?  // Can reference booking ID or other records
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Staff management for housekeeping and maintenance
+model Staff {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  phone       String?
+  position    String   // housekeeper, maintenance, supervisor
+  department  String   // housekeeping, maintenance
+  isActive    Boolean  @default(true)
+  hireDate    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       MaintenanceTask[]
+  assignments HousekeepingAssignment[]
+}
+
+// Maintenance task categories
+model MaintenanceCategory {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  color       String   @default("#3B82F6") // Color for calendar display
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       MaintenanceTask[]
+}
+
+// Maintenance tasks
+model MaintenanceTask {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  categoryId  String
+  category    MaintenanceCategory @relation(fields: [categoryId], references: [id])
+  priority    String    @default("medium") // low, medium, high, urgent
+  status      String    @default("pending") // pending, in_progress, completed, cancelled
+  assignedTo  String?   // Staff ID
+  staff       Staff?    @relation(fields: [assignedTo], references: [id])
+  roomId      String?   // Room ID if task is for specific room
+  room        Room?     @relation(fields: [roomId], references: [id])
+  scheduledDate DateTime @default(now())
+  dueDate     DateTime?
+  completedAt DateTime?
+  estimatedHours Float?
+  actualHours    Float?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Housekeeping task templates
+model HousekeepingTask {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  category    String   // bathroom, bedroom, public_area, etc.
+  estimatedTime Int    // in minutes
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assignments HousekeepingAssignment[]
+}
+
+// Daily housekeeping assignments
+model HousekeepingAssignment {
+  id          String   @id @default(cuid())
+  taskId      String
+  task        HousekeepingTask @relation(fields: [taskId], references: [id])
+  assignedTo  String   // Staff ID
+  staff       Staff    @relation(fields: [assignedTo], references: [id])
+  roomId      String?  // Room ID if task is for specific room
+  room        Room?    @relation(fields: [roomId], references: [id])
+  scheduledDate DateTime @default(now())
+  status      String   @default("pending") // pending, in_progress, completed, skipped
+  priority    String   @default("medium") // low, medium, high
+  completedAt DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Maintenance schedule (recurring tasks)
+model MaintenanceSchedule {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  categoryId  String
+  frequency   String   // daily, weekly, monthly, quarterly, yearly
+  interval    Int      @default(1) // Every X days/weeks/months
+  priority    String   @default("medium")
+  assignedTo  String?  // Default assigned staff
+  isActive    Boolean  @default(true)
+  lastCompleted DateTime?
+  nextDue     DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

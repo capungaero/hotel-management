@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -323,6 +323,9 @@ export default function FinancialPage() {
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add Financial Record</DialogTitle>
+                    <DialogDescription>
+                      Add a new income or expense record to track your financial data
+                    </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
