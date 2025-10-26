@@ -21,12 +21,88 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Post {
+model RoomType {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  capacity    Int
+  amenities   String? // JSON string of amenities
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rooms       Room[]
+}
+
+model Room {
+  id         String   @id @default(cuid())
+  roomNumber String   @unique
+  roomTypeId String
+  floor      Int
+  status     String   @default("available") // available, occupied, maintenance
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+  bookings   Booking[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Booking {
+  id           String   @id @default(cuid())
+  guestName    String
+  guestEmail   String
+  guestPhone   String
+  roomId       String
+  room         Room     @relation(fields: [roomId], references: [id])
+  checkInDate  DateTime
+  checkOutDate DateTime
+  adults       Int
+  children     Int      @default(0)
+  totalPrice   Float
+  status       String   @default("pending") // pending, confirmed, checked_in, checked_out, cancelled
+  specialRequests String?
+  payments     Payment[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Payment {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+  amount    Float
+  method    String   // cash, card, transfer
+  status    String   @default("pending") // pending, completed, failed
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AdditionalCharge {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  chargeType  String // per_night, per_stay, per_person
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BookingCharge {
+  id                String @id @default(cuid())
+  bookingId         String
+  additionalChargeId String
+  quantity          Int    @default(1)
+  price             Float
+  createdAt         DateTime @default(now())
+}
+
+model FinancialRecord {
+  id          String   @id @default(cuid())
+  type        String   // income, expense
+  category    String   // room_booking, additional_service, salary, maintenance, etc.
+  description String
+  amount      Float
+  date        DateTime
+  referenceId String?  // Can reference booking ID or other records
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
