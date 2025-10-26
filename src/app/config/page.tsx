@@ -247,22 +247,31 @@ export default function ConfigPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Settings className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold text-gray-900">Configuration</h1>
+              <Bed className="h-8 w-8 text-primary" />
+              <h1 className="text-2xl font-bold text-gray-900">Sikabuview</h1>
             </div>
-            <Button variant="ghost" onClick={() => window.location.href = '/'}>
-              Back to Home
-            </Button>
+            <nav className="flex space-x-4">
+              <Button variant="ghost" onClick={() => window.location.href = '/'}>Beranda</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Pemeliharaan</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/housekeeping'}>Housekeeping</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Konfigurasi</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Keuangan</Button>
+            </nav>
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="flex items-center space-x-3 mb-8">
+          <Settings className="h-8 w-8 text-primary" />
+          <h2 className="text-3xl font-bold text-gray-900">Konfigurasi Sistem</h2>
+        </div>
         <Tabs defaultValue="room-types" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="room-types">Room Types</TabsTrigger>
-            <TabsTrigger value="rooms">Rooms</TabsTrigger>
-            <TabsTrigger value="charges">Additional Charges</TabsTrigger>
+            <TabsTrigger value="room-types">Tipe Kamar</TabsTrigger>
+            <TabsTrigger value="rooms">Kamar</TabsTrigger>
+            <TabsTrigger value="charges">Biaya Tambahan</TabsTrigger>
           </TabsList>
 
           {/* Room Types Tab */}
@@ -273,7 +282,7 @@ export default function ConfigPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Bed className="h-5 w-5" />
-                    Room Types
+                    Tipe Kamar
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -312,11 +321,11 @@ export default function ConfigPage() {
                           </div>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span>Price: <span className="font-semibold">${type.price}/night</span></span>
-                          <span>Capacity: <span className="font-semibold">{type.capacity} guests</span></span>
+                          <span>Harga: <span className="font-semibold">Rp {type.price.toLocaleString('id-ID')}/malam</span></span>
+                          <span>Kapasitas: <span className="font-semibold">{type.capacity} tamu</span></span>
                         </div>
                         <div className="text-sm text-gray-500 mt-1">
-                          Rooms: {type.rooms.length}
+                          Kamar: {type.rooms.length}
                         </div>
                         {type.amenities && (
                           <div className="mt-2">
@@ -339,41 +348,41 @@ export default function ConfigPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    {editingRoomType ? 'Edit Room Type' : 'Add Room Type'}
+                    {editingRoomType ? 'Edit Tipe Kamar' : 'Tambah Tipe Kamar'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="roomTypeName">Name</Label>
+                    <Label htmlFor="roomTypeName">Nama</Label>
                     <Input
                       id="roomTypeName"
                       value={roomTypeForm.name}
                       onChange={(e) => setRoomTypeForm({...roomTypeForm, name: e.target.value})}
-                      placeholder="e.g., Deluxe Room"
+                      placeholder="contoh: Kamar Deluxe"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="roomTypeDescription">Description</Label>
+                    <Label htmlFor="roomTypeDescription">Deskripsi</Label>
                     <Textarea
                       id="roomTypeDescription"
                       value={roomTypeForm.description}
                       onChange={(e) => setRoomTypeForm({...roomTypeForm, description: e.target.value})}
-                      placeholder="Room description..."
+                      placeholder="Deskripsi kamar..."
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="roomTypePrice">Price per Night</Label>
+                      <Label htmlFor="roomTypePrice">Harga per Malam</Label>
                       <Input
                         id="roomTypePrice"
                         type="number"
                         value={roomTypeForm.price}
                         onChange={(e) => setRoomTypeForm({...roomTypeForm, price: e.target.value})}
-                        placeholder="100"
+                        placeholder="500000"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="roomTypeCapacity">Capacity</Label>
+                      <Label htmlFor="roomTypeCapacity">Kapasitas</Label>
                       <Input
                         id="roomTypeCapacity"
                         type="number"
@@ -384,17 +393,17 @@ export default function ConfigPage() {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="roomTypeAmenities">Amenities (comma-separated)</Label>
+                    <Label htmlFor="roomTypeAmenities">Fasilitas (dipisah koma)</Label>
                     <Input
                       id="roomTypeAmenities"
                       value={roomTypeForm.amenities}
                       onChange={(e) => setRoomTypeForm({...roomTypeForm, amenities: e.target.value})}
-                      placeholder="WiFi, TV, Mini Bar, Air Conditioning"
+                      placeholder="WiFi, TV, Mini Bar, AC"
                     />
                   </div>
                   <div className="flex space-x-2">
                     <Button onClick={saveRoomType} disabled={loading}>
-                      {editingRoomType ? 'Update' : 'Add'} Room Type
+                      {editingRoomType ? 'Update' : 'Tambah'} Tipe Kamar
                     </Button>
                     {editingRoomType && (
                       <Button
@@ -404,7 +413,7 @@ export default function ConfigPage() {
                           setRoomTypeForm({ name: '', description: '', price: '', capacity: '', amenities: '' })
                         }}
                       >
-                        Cancel
+                        Batal
                       </Button>
                     )}
                   </div>

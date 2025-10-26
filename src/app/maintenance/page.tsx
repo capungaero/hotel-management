@@ -216,29 +216,43 @@ export default function MaintenancePage() {
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Wrench className="h-8 w-8 text-orange-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Maintenance Management</h1>
+            <div className="flex items-center space-x-2">
+              <Bed className="h-8 w-8 text-primary" />
+              <h1 className="text-2xl font-bold text-gray-900">Sikabuview</h1>
             </div>
-            <Button 
-              onClick={() => setShowTaskDialog(true)}
-              className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              New Task
-            </Button>
+            <nav className="flex space-x-4">
+              <Button variant="ghost" onClick={() => window.location.href = '/'}>Beranda</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Pemeliharaan</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/housekeeping'}>Housekeeping</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Konfigurasi</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Keuangan</Button>
+            </nav>
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-3">
+            <Wrench className="h-8 w-8 text-orange-600" />
+            <h2 className="text-3xl font-bold text-gray-900">Manajemen Pemeliharaan</h2>
+          </div>
+          <Button 
+            onClick={() => setShowTaskDialog(true)}
+            className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Tugas Baru
+          </Button>
+        </div>
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-red-600">Urgent Tasks</p>
+                  <p className="text-sm font-medium text-red-600">Tugas Mendesak</p>
                   <p className="text-2xl font-bold text-red-700">
                     {tasks.filter(t => t.priority === 'urgent' && t.status !== 'completed').length}
                   </p>
@@ -252,7 +266,7 @@ export default function MaintenancePage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-blue-600">In Progress</p>
+                  <p className="text-sm font-medium text-blue-600">Sedang Berjalan</p>
                   <p className="text-2xl font-bold text-blue-700">
                     {tasks.filter(t => t.status === 'in_progress').length}
                   </p>
@@ -266,7 +280,7 @@ export default function MaintenancePage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-green-600">Completed Today</p>
+                  <p className="text-sm font-medium text-green-600">Selesai Hari Ini</p>
                   <p className="text-2xl font-bold text-green-700">
                     {tasks.filter(t => 
                       t.status === 'completed' && 
@@ -284,7 +298,7 @@ export default function MaintenancePage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-purple-600">Pending</p>
+                  <p className="text-sm font-medium text-purple-600">Menunggu</p>
                   <p className="text-2xl font-bold text-purple-700">
                     {tasks.filter(t => t.status === 'pending').length}
                   </p>
@@ -300,11 +314,11 @@ export default function MaintenancePage() {
           <CardContent className="p-6">
             <div className="flex flex-wrap gap-4 items-end">
               <div className="flex-1 min-w-[200px]">
-                <Label>Search</Label>
+                <Label>Cari</Label>
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
-                    placeholder="Search tasks..."
+                    placeholder="Cari tugas..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -319,39 +333,39 @@ export default function MaintenancePage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                    <SelectItem value="all">Semua Status</SelectItem>
+                    <SelectItem value="pending">Menunggu</SelectItem>
+                    <SelectItem value="in_progress">Sedang Berjalan</SelectItem>
+                    <SelectItem value="completed">Selesai</SelectItem>
+                    <SelectItem value="cancelled">Dibatalkan</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div className="min-w-[150px]">
-                <Label>Priority</Label>
+                <Label>Prioritas</Label>
                 <Select value={priorityFilter} onValueChange={setPriorityFilter}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Priority</SelectItem>
-                    <SelectItem value="urgent">Urgent</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="all">Semua Prioritas</SelectItem>
+                    <SelectItem value="urgent">Mendesak</SelectItem>
+                    <SelectItem value="high">Tinggi</SelectItem>
+                    <SelectItem value="medium">Sedang</SelectItem>
+                    <SelectItem value="low">Rendah</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div className="min-w-[150px]">
-                <Label>Assigned To</Label>
+                <Label>Ditugaskan Kepada</Label>
                 <Select value={assignedFilter} onValueChange={setAssignedFilter}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Staff</SelectItem>
+                    <SelectItem value="all">Semua Staff</SelectItem>
                     {staff.map((s) => (
                       <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
                     ))}
@@ -367,7 +381,7 @@ export default function MaintenancePage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Wrench className="h-5 w-5" />
-              Maintenance Tasks ({filteredTasks.length})
+              Tugas Pemeliharaan ({filteredTasks.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -375,7 +389,7 @@ export default function MaintenancePage() {
               {filteredTasks.length === 0 ? (
                 <div className="text-center py-8">
                   <Wrench className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">No maintenance tasks found</p>
+                  <p className="text-gray-500">Tidak ada tugas pemeliharaan ditemukan</p>
                 </div>
               ) : (
                 filteredTasks.map((task) => (
@@ -403,12 +417,12 @@ export default function MaintenancePage() {
                           <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                             <div className="flex items-center gap-1">
                               <CalendarIcon className="h-4 w-4" />
-                              Scheduled: {format(new Date(task.scheduledDate), 'MMM dd, yyyy')}
+                              Dijadwalkan: {format(new Date(task.scheduledDate), 'dd MMM yyyy')}
                             </div>
                             {task.dueDate && (
                               <div className="flex items-center gap-1">
                                 <Clock className="h-4 w-4" />
-                                Due: {format(new Date(task.dueDate), 'MMM dd, yyyy')}
+                                Batas Waktu: {format(new Date(task.dueDate), 'dd MMM yyyy')}
                               </div>
                             )}
                             {task.staff && (

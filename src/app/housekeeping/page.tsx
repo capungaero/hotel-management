@@ -217,28 +217,42 @@ export default function HousekeepingPage() {
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Sparkles className="h-8 w-8 text-teal-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Housekeeping Management</h1>
+            <div className="flex items-center space-x-2">
+              <Bed className="h-8 w-8 text-primary" />
+              <h1 className="text-2xl font-bold text-gray-900">Sikabuview</h1>
             </div>
-            <Button 
-              onClick={() => setShowAssignmentDialog(true)}
-              className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              New Assignment
-            </Button>
+            <nav className="flex space-x-4">
+              <Button variant="ghost" onClick={() => window.location.href = '/'}>Beranda</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Pemeliharaan</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/housekeeping'}>Housekeeping</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Konfigurasi</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Keuangan</Button>
+            </nav>
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-3">
+            <Sparkles className="h-8 w-8 text-teal-600" />
+            <h2 className="text-3xl font-bold text-gray-900">Manajemen Housekeeping</h2>
+          </div>
+          <Button 
+            onClick={() => setShowAssignmentDialog(true)}
+            className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Tugas Baru
+          </Button>
+        </div>
         {/* Date Selector and Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
           {/* Date Picker */}
           <Card className="lg:col-span-1">
             <CardHeader>
-              <CardTitle className="text-lg">Select Date</CardTitle>
+              <CardTitle className="text-lg">Pilih Tanggal</CardTitle>
             </CardHeader>
             <CardContent>
               <Calendar
@@ -256,10 +270,10 @@ export default function HousekeepingPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-green-600">Completed</p>
+                    <p className="text-sm font-medium text-green-600">Selesai</p>
                     <p className="text-2xl font-bold text-green-700">{taskStats.completed}</p>
                     <p className="text-xs text-green-600">
-                      {taskStats.total > 0 ? Math.round((taskStats.completed / taskStats.total) * 100) : 0}% done
+                      {taskStats.total > 0 ? Math.round((taskStats.completed / taskStats.total) * 100) : 0}% selesai
                     </p>
                   </div>
                   <CheckCircle className="h-8 w-8 text-green-500" />
@@ -271,9 +285,9 @@ export default function HousekeepingPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-blue-600">In Progress</p>
+                    <p className="text-sm font-medium text-blue-600">Sedang Berjalan</p>
                     <p className="text-2xl font-bold text-blue-700">{taskStats.inProgress}</p>
-                    <p className="text-xs text-blue-600">Currently working</p>
+                    <p className="text-xs text-blue-600">Sedang dikerjakan</p>
                   </div>
                   <Clock className="h-8 w-8 text-blue-500" />
                 </div>
@@ -284,9 +298,9 @@ export default function HousekeepingPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-yellow-600">Pending</p>
+                    <p className="text-sm font-medium text-yellow-600">Menunggu</p>
                     <p className="text-2xl font-bold text-yellow-700">{taskStats.pending}</p>
-                    <p className="text-xs text-yellow-600">Waiting to start</p>
+                    <p className="text-xs text-yellow-600">Menunggu dimulai</p>
                   </div>
                   <Home className="h-8 w-8 text-yellow-500" />
                 </div>
@@ -300,11 +314,11 @@ export default function HousekeepingPage() {
           <CardContent className="p-6">
             <div className="flex flex-wrap gap-4 items-end">
               <div className="flex-1 min-w-[200px]">
-                <Label>Search</Label>
+                <Label>Cari</Label>
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
-                    placeholder="Search assignments..."
+                    placeholder="Cari tugas..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -319,23 +333,23 @@ export default function HousekeepingPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="skipped">Skipped</SelectItem>
+                    <SelectItem value="all">Semua Status</SelectItem>
+                    <SelectItem value="pending">Menunggu</SelectItem>
+                    <SelectItem value="in_progress">Sedang Berjalan</SelectItem>
+                    <SelectItem value="completed">Selesai</SelectItem>
+                    <SelectItem value="skipped">Dilewati</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div className="min-w-[150px]">
-                <Label>Assigned To</Label>
+                <Label>Ditugaskan Kepada</Label>
                 <Select value={assignedFilter} onValueChange={setAssignedFilter}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Staff</SelectItem>
+                    <SelectItem value="all">Semua Staff</SelectItem>
                     {staff.map((s) => (
                       <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
                     ))}
@@ -351,7 +365,7 @@ export default function HousekeepingPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5" />
-              Housekeeping Assignments for {format(selectedDate, 'MMM dd, yyyy')} ({filteredAssignments.length})
+              Tugas Housekeeping untuk {format(selectedDate, 'dd MMM yyyy')} ({filteredAssignments.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -359,7 +373,7 @@ export default function HousekeepingPage() {
               {filteredAssignments.length === 0 ? (
                 <div className="text-center py-8">
                   <Sparkles className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">No housekeeping assignments found for this date</p>
+                  <p className="text-gray-500">Tidak ada tugas housekeeping ditemukan untuk tanggal ini</p>
                 </div>
               ) : (
                 filteredAssignments.map((assignment) => (
@@ -390,17 +404,17 @@ export default function HousekeepingPage() {
                             {assignment.room && (
                               <div className="flex items-center gap-1">
                                 <Home className="h-4 w-4" />
-                                Room {assignment.room.roomNumber}
+                                Kamar {assignment.room.roomNumber}
                               </div>
                             )}
                             <div className="flex items-center gap-1">
                               <Clock className="h-4 w-4" />
-                              Est. {assignment.task.estimatedTime} min
+                              Est. {assignment.task.estimatedTime} menit
                             </div>
                             {assignment.completedAt && (
                               <div className="flex items-center gap-1">
                                 <CheckCircle className="h-4 w-4" />
-                                Completed at {format(new Date(assignment.completedAt), 'HH:mm')}
+                                Selesai pukul {format(new Date(assignment.completedAt), 'HH:mm')}
                               </div>
                             )}
                           </div>

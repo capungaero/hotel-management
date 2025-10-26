@@ -310,13 +310,13 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Bed className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold text-gray-900">Hotel Booking System</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Sikabuview</h1>
             </div>
             <nav className="flex space-x-4">
-              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Maintenance</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Pemeliharaan</Button>
               <Button variant="ghost" onClick={() => window.location.href = '/housekeeping'}>Housekeeping</Button>
-              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Configuration</Button>
-              <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Financial</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Konfigurasi</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Keuangan</Button>
             </nav>
           </div>
         </div>

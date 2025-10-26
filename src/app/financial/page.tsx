@@ -200,57 +200,65 @@ export default function FinancialPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <DollarSign className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold text-gray-900">Financial Management</h1>
+              <Bed className="h-8 w-8 text-primary" />
+              <h1 className="text-2xl font-bold text-gray-900">Sikabuview</h1>
             </div>
-            <div className="flex space-x-2">
-              <Button variant="ghost" onClick={() => window.location.href = '/'}>Home</Button>
-              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Config</Button>
-            </div>
+            <nav className="flex space-x-4">
+              <Button variant="ghost" onClick={() => window.location.href = '/'}>Beranda</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/maintenance'}>Pemeliharaan</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/housekeeping'}>Housekeeping</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/config'}>Konfigurasi</Button>
+              <Button variant="ghost" onClick={() => window.location.href = '/financial'}>Keuangan</Button>
+            </nav>
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="flex items-center space-x-3 mb-8">
+          <DollarSign className="h-8 w-8 text-green-600" />
+          <h2 className="text-3xl font-bold text-gray-900">Manajemen Keuangan</h2>
+        </div>
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+              <CardTitle className="text-sm font-medium">Total Pemasukan</CardTitle>
               <TrendingUp className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">${income.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-green-600">Rp {income.toLocaleString('id-ID')}</div>
               <p className="text-xs text-muted-foreground">
-                {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                {format(dateRange.from, 'dd MMM')} - {format(dateRange.to, 'dd MMM yyyy')}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+              <CardTitle className="text-sm font-medium">Total Pengeluaran</CardTitle>
               <TrendingDown className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">${expense.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-red-600">Rp {expense.toLocaleString('id-ID')}</div>
               <p className="text-xs text-muted-foreground">
-                {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                {format(dateRange.from, 'dd MMM')} - {format(dateRange.to, 'dd MMM yyyy')}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Net Profit</CardTitle>
+              <CardTitle className="text-sm font-medium">Laba Bersih</CardTitle>
               <DollarSign className="h-4 w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${profit >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
-                ${profit.toFixed(2)}
+                Rp {profit.toLocaleString('id-ID')}
               </div>
               <p className="text-xs text-muted-foreground">
-                {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                {format(dateRange.from, 'dd MMM')} - {format(dateRange.to, 'dd MMM yyyy')}
               </p>
             </CardContent>
           </Card>
