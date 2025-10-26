@@ -21,7 +21,8 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Receipt,
-  CreditCard
+  CreditCard,
+  Bed
 } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
@@ -214,11 +215,19 @@ export default function FinancialPage() {
         </div>
       </header>
 
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Manajemen Keuangan</h2>
+          <p className="text-xl mb-8 text-green-100">Pantau dan kelola keuangan hotel Anda</p>
+        </div>
+      </section>
+
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="flex items-center space-x-3 mb-8">
           <DollarSign className="h-8 w-8 text-green-600" />
-          <h2 className="text-3xl font-bold text-gray-900">Manajemen Keuangan</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Dashboard Keuangan</h2>
         </div>
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -267,12 +276,12 @@ export default function FinancialPage() {
         {/* Date Range Selector */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Date Range</CardTitle>
+            <CardTitle>Pilih Rentang Tanggal</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-4 items-end">
               <div>
-                <Label>From Date</Label>
+                <Label>Dari Tanggal</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -297,7 +306,7 @@ export default function FinancialPage() {
                 </Popover>
               </div>
               <div>
-                <Label>To Date</Label>
+                <Label>Sampai Tanggal</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -325,34 +334,34 @@ export default function FinancialPage() {
                 <DialogTrigger asChild>
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Record
+                    Tambah Catatan
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Add Financial Record</DialogTitle>
+                    <DialogTitle>Tambah Catatan Keuangan</DialogTitle>
                     <DialogDescription>
-                      Add a new income or expense record to track your financial data
+                      Tambah catatan pemasukan atau pengeluaran baru untuk melacak data keuangan Anda
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>Type</Label>
+                      <Label>Tipe</Label>
                       <Select value={recordForm.type} onValueChange={(value: 'income' | 'expense') => setRecordForm({...recordForm, type: value})}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="income">Income</SelectItem>
-                          <SelectItem value="expense">Expense</SelectItem>
+                          <SelectItem value="income">Pemasukan</SelectItem>
+                          <SelectItem value="expense">Pengeluaran</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div>
-                      <Label>Category</Label>
+                      <Label>Kategori</Label>
                       <Select value={recordForm.category} onValueChange={(value) => setRecordForm({...recordForm, category: value})}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder="Pilih kategori" />
                         </SelectTrigger>
                         <SelectContent>
                           {(recordForm.type === 'income' ? incomeCategories : expenseCategories).map(category => (
@@ -364,15 +373,15 @@ export default function FinancialPage() {
                       </Select>
                     </div>
                     <div>
-                      <Label>Description</Label>
+                      <Label>Deskripsi</Label>
                       <Input
                         value={recordForm.description}
                         onChange={(e) => setRecordForm({...recordForm, description: e.target.value})}
-                        placeholder="Enter description"
+                        placeholder="Masukkan deskripsi"
                       />
                     </div>
                     <div>
-                      <Label>Amount</Label>
+                      <Label>Jumlah</Label>
                       <Input
                         type="number"
                         value={recordForm.amount}
@@ -381,7 +390,7 @@ export default function FinancialPage() {
                       />
                     </div>
                     <div>
-                      <Label>Date</Label>
+                      <Label>Tanggal</Label>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -407,10 +416,10 @@ export default function FinancialPage() {
                     </div>
                     <div className="flex space-x-2">
                       <Button onClick={saveFinancialRecord} disabled={loading}>
-                        Save Record
+                        Simpan Catatan
                       </Button>
                       <Button variant="outline" onClick={() => setShowAddDialog(false)}>
-                        Cancel
+                        Batal
                       </Button>
                     </div>
                   </div>
@@ -422,16 +431,16 @@ export default function FinancialPage() {
 
         <Tabs defaultValue="records" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="records">Financial Records</TabsTrigger>
-            <TabsTrigger value="bookings">Booking Revenue</TabsTrigger>
-            <TabsTrigger value="categories">Category Summary</TabsTrigger>
+            <TabsTrigger value="records">Catatan Keuangan</TabsTrigger>
+            <TabsTrigger value="bookings">Pendapatan Booking</TabsTrigger>
+            <TabsTrigger value="categories">Ringkasan Kategori</TabsTrigger>
           </TabsList>
 
           {/* Financial Records Tab */}
           <TabsContent value="records">
             <Card>
               <CardHeader>
-                <CardTitle>Financial Records</CardTitle>
+                <CardTitle>Catatan Keuangan</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4 max-h-96 overflow-y-auto">
@@ -447,7 +456,7 @@ export default function FinancialPage() {
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <Badge variant={record.type === 'income' ? 'default' : 'destructive'}>
-                              {record.type}
+                              {record.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}
                             </Badge>
                             <span className="font-medium">{record.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
                           </div>
@@ -457,7 +466,7 @@ export default function FinancialPage() {
                           </p>
                         </div>
                         <div className={`text-lg font-semibold ${record.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                          {record.type === 'income' ? '+' : '-'}${record.amount.toFixed(2)}
+                          {record.type === 'income' ? '+' : '-'}Rp {record.amount.toLocaleString('id-ID')}
                         </div>
                       </div>
                     </div>
@@ -471,7 +480,7 @@ export default function FinancialPage() {
           <TabsContent value="bookings">
             <Card>
               <CardHeader>
-                <CardTitle>Booking Revenue</CardTitle>
+                <CardTitle>Pendapatan Booking</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4 max-h-96 overflow-y-auto">
@@ -493,14 +502,14 @@ export default function FinancialPage() {
                             <span className="font-medium">{booking.guestName}</span>
                           </div>
                           <p className="text-sm text-gray-600">
-                            Room {booking.room.roomNumber} - {booking.room.roomType.name}
+                            Kamar {booking.room.roomNumber} - {booking.room.roomType.name}
                           </p>
                           <p className="text-xs text-gray-500 mt-1">
                             {format(new Date(booking.createdAt), 'MMM dd, yyyy')}
                           </p>
                         </div>
                         <div className="text-lg font-semibold text-green-600">
-                          ${booking.totalPrice.toFixed(2)}
+                          Rp {booking.totalPrice.toLocaleString('id-ID')}
                         </div>
                       </div>
                     </div>
@@ -514,7 +523,7 @@ export default function FinancialPage() {
           <TabsContent value="categories">
             <Card>
               <CardHeader>
-                <CardTitle>Category Summary</CardTitle>
+                <CardTitle>Ringkasan Kategori</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -526,17 +535,17 @@ export default function FinancialPage() {
                         </h3>
                         <div className={`font-semibold ${item.net >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {item.net >= 0 ? <ArrowUpRight className="inline h-4 w-4 mr-1" /> : <ArrowDownRight className="inline h-4 w-4 mr-1" />}
-                          ${Math.abs(item.net).toFixed(2)}
+                          Rp {Math.abs(item.net).toLocaleString('id-ID')}
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <span className="text-gray-600">Income: </span>
-                          <span className="font-medium text-green-600">${item.income.toFixed(2)}</span>
+                          <span className="text-gray-600">Pemasukan: </span>
+                          <span className="font-medium text-green-600">Rp {item.income.toLocaleString('id-ID')}</span>
                         </div>
                         <div>
-                          <span className="text-gray-600">Expense: </span>
-                          <span className="font-medium text-red-600">${item.expense.toFixed(2)}</span>
+                          <span className="text-gray-600">Pengeluaran: </span>
+                          <span className="font-medium text-red-600">Rp {item.expense.toLocaleString('id-ID')}</span>
                         </div>
                       </div>
                     </div>

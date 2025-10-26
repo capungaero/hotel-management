@@ -11,7 +11,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
-import { CalendarIcon, Plus, Wrench, Clock, User, AlertCircle, CheckCircle, Filter, Search } from 'lucide-react'
+import { CalendarIcon, Plus, Wrench, Clock, User, AlertCircle, CheckCircle, Filter, Search, Bed } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
 
@@ -231,12 +231,20 @@ export default function MaintenancePage() {
         </div>
       </header>
 
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Manajemen Pemeliharaan</h2>
+          <p className="text-xl mb-8 text-orange-100">Kelola semua tugas pemeliharaan hotel dengan efisien</p>
+        </div>
+      </section>
+
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
             <Wrench className="h-8 w-8 text-orange-600" />
-            <h2 className="text-3xl font-bold text-gray-900">Manajemen Pemeliharaan</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Dashboard Pemeliharaan</h2>
           </div>
           <Button 
             onClick={() => setShowTaskDialog(true)}

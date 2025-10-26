@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { CalendarIcon, Plus, Home, Clock, User, CheckCircle, Filter, Search, Sparkles } from 'lucide-react'
+import { CalendarIcon, Plus, Home, Clock, User, CheckCircle, Filter, Search, Sparkles, Bed } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
 
@@ -232,12 +232,20 @@ export default function HousekeepingPage() {
         </div>
       </header>
 
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Manajemen Housekeeping</h2>
+          <p className="text-xl mb-8 text-teal-100">Kelola kebersihan dan kerapian kamar hotel</p>
+        </div>
+      </section>
+
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
             <Sparkles className="h-8 w-8 text-teal-600" />
-            <h2 className="text-3xl font-bold text-gray-900">Manajemen Housekeeping</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Dashboard Housekeeping</h2>
           </div>
           <Button 
             onClick={() => setShowAssignmentDialog(true)}

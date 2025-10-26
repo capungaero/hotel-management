@@ -261,11 +261,19 @@ export default function ConfigPage() {
         </div>
       </header>
 
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Konfigurasi Sistem</h2>
+          <p className="text-xl mb-8 text-purple-100">Atur pengaturan dan konfigurasi hotel Anda</p>
+        </div>
+      </section>
+
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="flex items-center space-x-3 mb-8">
-          <Settings className="h-8 w-8 text-primary" />
-          <h2 className="text-3xl font-bold text-gray-900">Konfigurasi Sistem</h2>
+          <Settings className="h-8 w-8 text-purple-600" />
+          <h2 className="text-3xl font-bold text-gray-900">Dashboard Konfigurasi</h2>
         </div>
         <Tabs defaultValue="room-types" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
@@ -428,7 +436,7 @@ export default function ConfigPage() {
               {/* Rooms List */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Rooms</CardTitle>
+                  <CardTitle>Kamar</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4 max-h-96 overflow-y-auto">
@@ -438,16 +446,17 @@ export default function ConfigPage() {
                         <div key={room.id} className="border rounded-lg p-4">
                           <div className="flex justify-between items-center">
                             <div>
-                              <h3 className="font-semibold">Room {room.roomNumber}</h3>
+                              <h3 className="font-semibold">Kamar {room.roomNumber}</h3>
                               <p className="text-sm text-gray-600">
-                                {roomType?.name} - Floor {room.floor}
+                                {roomType?.name} - Lantai {room.floor}
                               </p>
                             </div>
                             <Badge 
                               variant={room.status === 'available' ? 'default' : 
                                       room.status === 'occupied' ? 'destructive' : 'secondary'}
                             >
-                              {room.status}
+                              {room.status === 'available' ? 'Tersedia' : 
+                                      room.status === 'occupied' ? 'Terisi' : room.status}
                             </Badge>
                           </div>
                         </div>
@@ -460,45 +469,45 @@ export default function ConfigPage() {
               {/* Add Room Form */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Add Room</CardTitle>
+                  <CardTitle>Tambah Kamar</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="roomNumber">Room Number</Label>
+                    <Label htmlFor="roomNumber">Nomor Kamar</Label>
                     <Input
                       id="roomNumber"
                       value={roomForm.roomNumber}
                       onChange={(e) => setRoomForm({...roomForm, roomNumber: e.target.value})}
-                      placeholder="e.g., 101"
+                      placeholder="contoh: 101"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="roomTypeSelect">Room Type</Label>
+                    <Label htmlFor="roomTypeSelect">Tipe Kamar</Label>
                     <Select value={roomForm.roomTypeId} onValueChange={(value) => setRoomForm({...roomForm, roomTypeId: value})}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select room type" />
+                        <SelectValue placeholder="Pilih tipe kamar" />
                       </SelectTrigger>
                       <SelectContent>
                         {roomTypes.map((type) => (
                           <SelectItem key={type.id} value={type.id}>
-                            {type.name} - ${type.price}/night
+                            {type.name} - Rp {type.price.toLocaleString('id-ID')}/malam
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="roomFloor">Floor</Label>
+                    <Label htmlFor="roomFloor">Lantai</Label>
                     <Input
                       id="roomFloor"
                       type="number"
                       value={roomForm.floor}
                       onChange={(e) => setRoomForm({...roomForm, floor: e.target.value})}
-                      placeholder="e.g., 1"
+                      placeholder="contoh: 1"
                     />
                   </div>
                   <Button onClick={saveRoom} disabled={loading}>
-                    Add Room
+                    Tambah Kamar
                   </Button>
                 </CardContent>
               </Card>
@@ -513,7 +522,7 @@ export default function ConfigPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <DollarSign className="h-5 w-5" />
-                    Additional Charges
+                    Biaya Tambahan
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
