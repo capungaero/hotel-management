@@ -430,7 +430,7 @@ export default function HousekeepingPage() {
                           {assignment.notes && (
                             <div className="mt-3 p-3 bg-gray-50 rounded">
                               <p className="text-sm text-gray-600">
-                                <strong>Notes:</strong> {assignment.notes}
+                                <strong>Catatan:</strong> {assignment.notes}
                               </p>
                             </div>
                           )}
@@ -481,20 +481,20 @@ export default function HousekeepingPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5" />
-              Create New Housekeeping Assignment
+              Buat Tugas Housekeeping Baru
             </DialogTitle>
             <DialogDescription>
-              Assign housekeeping tasks to staff members for specific rooms and dates
+              Tetapkan tugas housekeeping kepada staf untuk kamar dan tanggal tertentu
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="task">Task *</Label>
+                <Label htmlFor="task">Tugas *</Label>
                 <Select value={assignmentForm.taskId} onValueChange={(value) => setAssignmentForm({...assignmentForm, taskId: value})}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select task" />
+                    <SelectValue placeholder="Pilih tugas" />
                   </SelectTrigger>
                   <SelectContent>
                     {tasks.map((task) => (
@@ -510,10 +510,10 @@ export default function HousekeepingPage() {
               </div>
               
               <div>
-                <Label htmlFor="assignedTo">Assign To *</Label>
+                <Label htmlFor="assignedTo">Ditugaskan Kepada *</Label>
                 <Select value={assignmentForm.assignedTo} onValueChange={(value) => setAssignmentForm({...assignmentForm, assignedTo: value})}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select staff" />
+                    <SelectValue placeholder="Pilih staff" />
                   </SelectTrigger>
                   <SelectContent>
                     {staff.map((s) => (
@@ -526,21 +526,21 @@ export default function HousekeepingPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="priority">Priority</Label>
+                <Label htmlFor="priority">Prioritas</Label>
                 <Select value={assignmentForm.priority} onValueChange={(value) => setAssignmentForm({...assignmentForm, priority: value})}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="low">Rendah</SelectItem>
+                    <SelectItem value="medium">Sedang</SelectItem>
+                    <SelectItem value="high">Tinggi</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
-                <Label>Scheduled Date</Label>
+                <Label>Tanggal Terjadwal</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -567,7 +567,7 @@ export default function HousekeepingPage() {
             </div>
             
             <div>
-              <Label htmlFor="notes">Notes</Label>
+              <Label htmlFor="notes">Catatan</Label>
               <Textarea
                 id="notes"
                 value={assignmentForm.notes}
@@ -580,14 +580,14 @@ export default function HousekeepingPage() {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowAssignmentDialog(false)}>
-              Cancel
+              Batal
             </Button>
             <Button 
               onClick={handleCreateAssignment}
               disabled={loading}
               className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700"
             >
-              {loading ? 'Creating...' : 'Create Assignment'}
+              {loading ? 'Membuat...' : 'Buat Tugas'}
             </Button>
           </DialogFooter>
         </DialogContent>

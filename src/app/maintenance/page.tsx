@@ -500,17 +500,17 @@ export default function MaintenancePage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Wrench className="h-5 w-5" />
-              Create New Maintenance Task
+              Buat Tugas Pemeliharaan Baru
             </DialogTitle>
             <DialogDescription>
-              Fill in the details to create a new maintenance task
+              Isi detail untuk membuat tugas pemeliharaan baru
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="title">Task Title *</Label>
+                <Label htmlFor="title">Judul Tugas *</Label>
                 <Input
                   id="title"
                   value={taskForm.title}
@@ -520,10 +520,10 @@ export default function MaintenancePage() {
               </div>
               
               <div>
-                <Label htmlFor="category">Category *</Label>
+                <Label htmlFor="category">Kategori *</Label>
                 <Select value={taskForm.categoryId} onValueChange={(value) => setTaskForm({...taskForm, categoryId: value})}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="Pilih kategori" />
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map((cat) => (
@@ -540,7 +540,7 @@ export default function MaintenancePage() {
             </div>
             
             <div>
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Deskripsi</Label>
               <Textarea
                 id="description"
                 value={taskForm.description}
@@ -552,28 +552,28 @@ export default function MaintenancePage() {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="priority">Priority</Label>
+                <Label htmlFor="priority">Prioritas</Label>
                 <Select value={taskForm.priority} onValueChange={(value) => setTaskForm({...taskForm, priority: value})}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="urgent">Urgent</SelectItem>
+                    <SelectItem value="low">Rendah</SelectItem>
+                    <SelectItem value="medium">Sedang</SelectItem>
+                    <SelectItem value="high">Tinggi</SelectItem>
+                    <SelectItem value="urgent">Mendesak</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
-                <Label htmlFor="assignedTo">Assign To</Label>
+                <Label htmlFor="assignedTo">Ditugaskan Kepada</Label>
                 <Select value={taskForm.assignedTo} onValueChange={(value) => setTaskForm({...taskForm, assignedTo: value})}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select staff" />
+                    <SelectValue placeholder="Pilih staff" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Unassigned</SelectItem>
+                    <SelectItem value="">Belum Ditugaskan</SelectItem>
                     {staff.map((s) => (
                       <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
                     ))}
@@ -582,7 +582,7 @@ export default function MaintenancePage() {
               </div>
               
               <div>
-                <Label htmlFor="estimatedHours">Estimated Hours</Label>
+                <Label htmlFor="estimatedHours">Perkiraan Jam</Label>
                 <Input
                   id="estimatedHours"
                   type="number"
@@ -596,7 +596,7 @@ export default function MaintenancePage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label>Scheduled Date</Label>
+                <Label>Tanggal Terjadwal</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -622,7 +622,7 @@ export default function MaintenancePage() {
               </div>
               
               <div>
-                <Label>Due Date</Label>
+                <Label>Tanggal Jatuh Tempo</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -649,7 +649,7 @@ export default function MaintenancePage() {
             </div>
             
             <div>
-              <Label htmlFor="notes">Notes</Label>
+              <Label htmlFor="notes">Catatan</Label>
               <Textarea
                 id="notes"
                 value={taskForm.notes}
@@ -662,14 +662,14 @@ export default function MaintenancePage() {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowTaskDialog(false)}>
-              Cancel
+              Batal
             </Button>
             <Button 
               onClick={handleCreateTask}
               disabled={loading}
               className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
             >
-              {loading ? 'Creating...' : 'Create Task'}
+              {loading ? 'Membuat...' : 'Buat Tugas'}
             </Button>
           </DialogFooter>
         </DialogContent>

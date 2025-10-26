@@ -196,7 +196,7 @@ export default function ConfigPage() {
   }
 
   const deleteRoomType = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this room type?')) return
+    if (!confirm('Apakah Anda yakin ingin menghapus tipe kamar ini?')) return
     
     try {
       const response = await fetch(`/api/room-types/${id}`, {
@@ -211,7 +211,7 @@ export default function ConfigPage() {
   }
 
   const deleteAdditionalCharge = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this additional charge?')) return
+    if (!confirm('Apakah Anda yakin ingin menghapus biaya tambahan ini?')) return
     
     try {
       const response = await fetch(`/api/additional-charges/${id}`, {
@@ -411,7 +411,7 @@ export default function ConfigPage() {
                   </div>
                   <div className="flex space-x-2">
                     <Button onClick={saveRoomType} disabled={loading}>
-                      {editingRoomType ? 'Update' : 'Tambah'} Tipe Kamar
+                      {editingRoomType ? 'Perbarui' : 'Tambah'} Tipe Kamar
                     </Button>
                     {editingRoomType && (
                       <Button
@@ -564,12 +564,12 @@ export default function ConfigPage() {
                           </div>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span>Price: <span className="font-semibold">${charge.price}</span></span>
-                          <span>Type: <span className="font-semibold">{charge.chargeType.replace('_', ' ')}</span></span>
+                          <span>Harga: <span className="font-semibold">Rp {charge.price.toLocaleString('id-ID')}</span></span>
+                          <span>Tipe: <span className="font-semibold">{charge.chargeType.replace('_', ' ')}</span></span>
                         </div>
                         <div className="mt-1">
                           <Badge variant={charge.isActive ? 'default' : 'secondary'}>
-                            {charge.isActive ? 'Active' : 'Inactive'}
+                            {charge.isActive ? 'Aktif' : 'Tidak Aktif'}
                           </Badge>
                         </div>
                       </div>
@@ -582,31 +582,31 @@ export default function ConfigPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    {editingCharge ? 'Edit Charge' : 'Add Additional Charge'}
+                    {editingCharge ? 'Edit Biaya' : 'Tambah Biaya Tambahan'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="chargeName">Name</Label>
+                    <Label htmlFor="chargeName">Nama</Label>
                     <Input
                       id="chargeName"
                       value={chargeForm.name}
                       onChange={(e) => setChargeForm({...chargeForm, name: e.target.value})}
-                      placeholder="e.g., Breakfast"
+                      placeholder="contoh: Sarapan"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="chargeDescription">Description</Label>
+                    <Label htmlFor="chargeDescription">Deskripsi</Label>
                     <Textarea
                       id="chargeDescription"
                       value={chargeForm.description}
                       onChange={(e) => setChargeForm({...chargeForm, description: e.target.value})}
-                      placeholder="Charge description..."
+                      placeholder="Deskripsi biaya..."
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="chargePrice">Price</Label>
+                      <Label htmlFor="chargePrice">Harga</Label>
                       <Input
                         id="chargePrice"
                         type="number"
@@ -616,22 +616,22 @@ export default function ConfigPage() {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="chargeType">Charge Type</Label>
+                      <Label htmlFor="chargeType">Tipe Biaya</Label>
                       <Select value={chargeForm.chargeType} onValueChange={(value) => setChargeForm({...chargeForm, chargeType: value})}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="per_night">Per Night</SelectItem>
-                          <SelectItem value="per_stay">Per Stay</SelectItem>
-                          <SelectItem value="per_person">Per Person</SelectItem>
+                          <SelectItem value="per_night">Per Malam</SelectItem>
+                          <SelectItem value="per_stay">Per Menginap</SelectItem>
+                          <SelectItem value="per_person">Per Orang</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
                   <div className="flex space-x-2">
                     <Button onClick={saveAdditionalCharge} disabled={loading}>
-                      {editingCharge ? 'Update' : 'Add'} Charge
+                      {editingCharge ? 'Perbarui' : 'Tambah'} Biaya
                     </Button>
                     {editingCharge && (
                       <Button
@@ -641,7 +641,7 @@ export default function ConfigPage() {
                           setChargeForm({ name: '', description: '', price: '', chargeType: 'per_stay' })
                         }}
                       >
-                        Cancel
+                        Batal
                       </Button>
                     )}
                   </div>

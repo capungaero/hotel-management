@@ -325,8 +325,8 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Find Your Perfect Stay</h2>
-          <p className="text-xl mb-8 text-blue-100">Book comfortable rooms at affordable prices</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Temukan Penginapan Sempurna Anda</h2>
+          <p className="text-xl mb-8 text-blue-100">Pesan kamar nyaman dengan harga terjangkau</p>
         </div>
       </section>
 
@@ -336,14 +336,14 @@ export default function Home() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Search className="h-5 w-5" />
-              Search Available Rooms
+              Cari Kamar Tersedia
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               {/* Check-in Date */}
               <div className="space-y-2">
-                <Label>Check-in Date</Label>
+                <Label>Tanggal Check-in</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -354,7 +354,7 @@ export default function Home() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {checkIn ? format(checkIn, "PPP") : "Pick a date"}
+                      {checkIn ? format(checkIn, "PPP") : "Pilih tanggal"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -371,7 +371,7 @@ export default function Home() {
 
               {/* Check-out Date */}
               <div className="space-y-2">
-                <Label>Check-out Date</Label>
+                <Label>Tanggal Check-out</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -382,7 +382,7 @@ export default function Home() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {checkOut ? format(checkOut, "PPP") : "Pick a date"}
+                      {checkOut ? format(checkOut, "PPP") : "Pilih tanggal"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -399,13 +399,13 @@ export default function Home() {
 
               {/* Room Type */}
               <div className="space-y-2">
-                <Label>Room Type</Label>
+                <Label>Tipe Kamar</Label>
                 <Select value={selectedRoomType} onValueChange={setSelectedRoomType}>
                   <SelectTrigger>
-                    <SelectValue placeholder="All types" />
+                    <SelectValue placeholder="Semua tipe" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All types</SelectItem>
+                    <SelectItem value="all">Semua tipe</SelectItem>
                     {roomTypes.map((type) => (
                       <SelectItem key={type.id} value={type.id}>
                         {type.name} - ${type.price}/night
@@ -417,7 +417,7 @@ export default function Home() {
 
               {/* Guests */}
               <div className="space-y-2">
-                <Label>Guests</Label>
+                <Label>Tamu</Label>
                 <div className="flex space-x-2">
                   <div className="flex-1">
                     <Input
@@ -425,7 +425,7 @@ export default function Home() {
                       min="1"
                       value={adults}
                       onChange={(e) => setAdults(parseInt(e.target.value) || 1)}
-                      placeholder="Adults"
+                      placeholder="Dewasa"
                     />
                   </div>
                   <div className="flex-1">
@@ -434,7 +434,7 @@ export default function Home() {
                       min="0"
                       value={children}
                       onChange={(e) => setChildren(parseInt(e.target.value) || 0)}
-                      placeholder="Children"
+                      placeholder="Anak-anak"
                     />
                   </div>
                 </div>
@@ -447,7 +447,7 @@ export default function Home() {
                   disabled={loading}
                   className="w-full"
                 >
-                  {loading ? 'Searching...' : 'Search Rooms'}
+                  {loading ? 'Mencari...' : 'Cari Kamar'}
                 </Button>
               </div>
             </div>
@@ -803,7 +803,7 @@ export default function Home() {
                     
                     {booking.specialRequests && (
                       <div className="mt-4 p-3 bg-gray-50 rounded">
-                        <h5 className="font-medium text-sm mb-1">Special Requests:</h5>
+                        <h5 className="font-medium text-sm mb-1">Permintaan Khusus:</h5>
                         <p className="text-sm text-gray-600">{booking.specialRequests}</p>
                       </div>
                     )}
@@ -821,10 +821,10 @@ export default function Home() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <CalendarDays className="h-5 w-5" />
-              Create Booking for {selectedDate && format(selectedDate, 'PPP')}
+              Buat Pemesanan untuk {selectedDate && format(selectedDate, 'PPP')}
             </DialogTitle>
             <DialogDescription>
-              Select an available room and enter guest details to create a new booking
+              Pilih kamar yang tersedia dan masukkan detail tamu untuk membuat pemesanan baru
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
@@ -882,7 +882,7 @@ export default function Home() {
                   type="email"
                   value={bookingForm.guestEmail}
                   onChange={(e) => setBookingForm({...bookingForm, guestEmail: e.target.value})}
-                  placeholder="Enter email address"
+                  placeholder="Masukkan alamat email"
                 />
               </div>
             </div>
@@ -894,11 +894,11 @@ export default function Home() {
                   id="guestPhone"
                   value={bookingForm.guestPhone}
                   onChange={(e) => setBookingForm({...bookingForm, guestPhone: e.target.value})}
-                  placeholder="Enter phone number"
+                  placeholder="Masukkan nomor telepon"
                 />
               </div>
               <div>
-                <Label>Guests</Label>
+                <Label>Tamu</Label>
                 <div className="flex space-x-2">
                   <div className="flex-1">
                     <Input
@@ -906,7 +906,7 @@ export default function Home() {
                       min="1"
                       value={bookingForm.adults}
                       onChange={(e) => setBookingForm({...bookingForm, adults: parseInt(e.target.value) || 1})}
-                      placeholder="Adults"
+                      placeholder="Dewasa"
                     />
                   </div>
                   <div className="flex-1">
@@ -915,32 +915,32 @@ export default function Home() {
                       min="0"
                       value={bookingForm.children}
                       onChange={(e) => setBookingForm({...bookingForm, children: parseInt(e.target.value) || 0})}
-                      placeholder="Children"
+                      placeholder="Anak-anak"
                     />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Special Requests */}
+            {/* Permintaan Khusus */}
             <div>
-              <Label htmlFor="specialRequests">Special Requests</Label>
+              <Label htmlFor="specialRequests">Permintaan Khusus</Label>
               <Input
                 id="specialRequests"
                 value={bookingForm.specialRequests}
                 onChange={(e) => setBookingForm({...bookingForm, specialRequests: e.target.value})}
-                placeholder="Any special requests (optional)"
+                placeholder="Permintaan khusus (opsional)"
               />
             </div>
 
             {/* Booking Summary */}
             {bookingForm.roomId && (
               <div className="bg-gray-50 p-4 rounded">
-                <h4 className="font-semibold mb-2">Booking Summary</h4>
+                <h4 className="font-semibold mb-2">Ringkasan Pemesanan</h4>
                 <div className="text-sm space-y-1">
                   <p>Check-in: {selectedDate && format(selectedDate, 'PPP')}</p>
                   <p>Check-out: {selectedDate && format(new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000), 'PPP')}</p>
-                  <p>Guests: {bookingForm.adults} adults {bookingForm.children > 0 && `+ ${bookingForm.children} children`}</p>
+                  <p>Tamu: {bookingForm.adults} dewasa {bookingForm.children > 0 && `+ ${bookingForm.children} anak`}</p>
                   {(() => {
                     const selectedRoom = availableRoomsForDate.find(r => r.id === bookingForm.roomId)
                     return selectedRoom ? (
@@ -958,13 +958,13 @@ export default function Home() {
                 onClick={() => setShowCreateBookingModal(false)}
                 disabled={createBookingLoading}
               >
-                Cancel
+                Batal
               </Button>
               <Button 
                 onClick={handleCreateBooking}
                 disabled={createBookingLoading || !bookingForm.roomId || !bookingForm.guestName || !bookingForm.guestEmail || !bookingForm.guestPhone}
               >
-                {createBookingLoading ? 'Creating...' : 'Create Booking'}
+                {createBookingLoading ? 'Membuat...' : 'Buat Pemesanan'}
               </Button>
             </div>
           </div>
@@ -1013,7 +1013,7 @@ export default function Home() {
             </div>
             
             <p className="text-xs text-gray-500 text-center">
-              Click "Add Booking" to continue, or "Cancel" to close.
+              Klik "Buat Pemesanan" untuk melanjutkan, atau "Batal" untuk menutup.
             </p>
           </div>
           <DialogFooter className="gap-3 -mx-6 px-6 pb-6">
@@ -1022,7 +1022,7 @@ export default function Home() {
               onClick={handleCancelAddBooking}
               className="flex-1 h-12 border-gray-300 hover:bg-gray-50"
             >
-              Cancel
+              Batal
             </Button>
             <Button 
               onClick={handleConfirmAddBooking}
