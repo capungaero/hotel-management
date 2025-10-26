@@ -56,25 +56,21 @@ export async function GET(request: NextRequest) {
       whereClause.roomTypeId = roomTypeId
     }
 
-    // Find available rooms with capacity filter
+    // Find available rooms first
     const availableRooms = await db.room.findMany({
       where: whereClause,
       include: {
-        roomType: {
-          where: {
-            capacity: {
-              gte: adults + children
-            }
-          }
-        }
+        roomType: true
       },
       orderBy: {
         roomNumber: 'asc'
       }
     })
 
-    // Filter out rooms that don't have matching room types
-    const filteredRooms = availableRooms.filter(room => room.roomType !== null)
+    // Filter rooms based on capacity
+    const filteredRooms = availableRooms.filter(room => 
+      room.roomType && room.roomType.capacity >= (adults + children)
+    )
 
     return NextResponse.json(filteredRooms)
   } catch (error) {

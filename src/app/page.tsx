@@ -63,8 +63,8 @@ export default function Home() {
     setLoading(true)
     try {
       const params = new URLSearchParams({
-        checkIn: checkIn.toISOString(),
-        checkOut: checkOut.toISOString(),
+        checkIn: checkIn.toISOString().split('T')[0],
+        checkOut: checkOut.toISOString().split('T')[0],
         adults: adults.toString(),
         children: children.toString(),
         ...(selectedRoomType && { roomTypeId: selectedRoomType })
@@ -83,7 +83,7 @@ export default function Home() {
 
   const handleBooking = (room: Room) => {
     // Navigate to booking page or open booking modal
-    window.location.href = `/booking?roomId=${room.id}&checkIn=${checkIn?.toISOString()}&checkOut=${checkOut?.toISOString()}&adults=${adults}&children=${children}`
+    window.location.href = `/booking?roomId=${room.id}&checkIn=${checkIn?.toISOString().split('T')[0]}&checkOut=${checkOut?.toISOString().split('T')[0]}&adults=${adults}&children=${children}`
   }
 
   return (
