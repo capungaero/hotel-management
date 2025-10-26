@@ -15,6 +15,9 @@ import { CalendarIcon, Search, Bed, Users, DollarSign, CalendarDays, MapPin, Pho
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 interface RoomType {
   id: string
   name: string
@@ -688,11 +691,21 @@ export default function Home() {
                         <div>
                           <p className="text-sm font-medium mb-1">Amenities:</p>
                           <div className="flex flex-wrap gap-1">
-                            {JSON.parse(room.roomType.amenities).map((amenity: string, index: number) => (
-                              <span key={index} className="text-xs bg-gray-100 px-2 py-1 rounded">
-                                {amenity}
-                              </span>
-                            ))}
+                            {(() => {
+                              try {
+                                return JSON.parse(room.roomType.amenities).map((amenity: string, index: number) => (
+                                  <span key={index} className="text-xs bg-gray-100 px-2 py-1 rounded">
+                                    {amenity}
+                                  </span>
+                                ))
+                              } catch (error) {
+                                return (
+                                  <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                                    {room.roomType.amenities}
+                                  </span>
+                                )
+                              }
+                            })()}
                           </div>
                         </div>
                       )}

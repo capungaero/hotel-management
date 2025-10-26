@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon, ArrowLeft, Users, DollarSign, Bed } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
 
 interface Room {
   id: string
@@ -35,7 +38,7 @@ interface AdditionalCharge {
   description: string
 }
 
-export default function BookingPage() {
+function BookingPageContent() {
   const searchParams = useSearchParams()
   const roomId = searchParams.get('roomId')
   const checkIn = searchParams.get('checkIn')
@@ -158,6 +161,7 @@ export default function BookingPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
           <p>Loading room details...</p>
         </div>
       </div>
@@ -390,5 +394,20 @@ export default function BookingPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function BookingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p>Loading booking page...</p>
+        </div>
+      </div>
+    }>
+      <BookingPageContent />
+    </Suspense>
   )
 }
