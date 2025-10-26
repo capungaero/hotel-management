@@ -1,24 +1,23 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { NextResponse } from 'next/server'
+import { db } from '@/lib/db'
 
 export async function GET() {
   try {
     console.log('Testing database connection...')
     
     // Test database connection
-    await prisma.$connect()
+    await db.$connect()
     console.log('Database connected successfully!')
     
     // Test simple query
-    const count = await prisma.roomType.count()
+    const count = await db.roomType.count()
     console.log('Room types count:', count)
     
     // Get room types
-    const roomTypes = await prisma.roomType.findMany()
+    const roomTypes = await db.roomType.findMany()
     console.log('Room types found:', roomTypes.length)
     
-    return Response.json({ 
+    return NextResponse.json({ 
       success: true, 
       message: 'Database connection successful',
       count: count,
@@ -26,12 +25,12 @@ export async function GET() {
     })
   } catch (error) {
     console.error('Database connection error:', error)
-    return Response.json({ 
+    return NextResponse.json({ 
       success: false, 
       error: error.message,
       details: error.stack 
     }, { status: 500 })
   } finally {
-    await prisma.$disconnect()
+    await db.$disconnect()
   }
 }
