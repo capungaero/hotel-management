@@ -716,7 +716,7 @@ export default function Home() {
                         onClick={() => handleBooking(room)}
                         className="w-full"
                       >
-                        Book Now
+                        Pesan Sekarang
                       </Button>
                     </div>
                   </CardContent>

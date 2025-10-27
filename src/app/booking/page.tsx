@@ -162,7 +162,7 @@ function BookingPageContent() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Loading room details...</p>
+          <p>Memuat detail kamar...</p>
         </div>
       </div>
     )
@@ -185,9 +185,9 @@ function BookingPageContent() {
                 className="flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back
+                Kembali
               </Button>
-              <h1 className="text-2xl font-bold text-gray-900">Complete Your Booking</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Lengkapi Pemesanan Anda</h1>
             </div>
           </div>
         </div>
@@ -326,23 +326,23 @@ function BookingPageContent() {
                     <span>{checkOut ? format(new Date(checkOut), 'MMM dd, yyyy') : ''}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Nights:</span>
+                    <span>Malam:</span>
                     <span>{nights}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="flex items-center gap-1">
                       <Users className="h-3 w-3" />
-                      Guests:
+                      Tamu:
                     </span>
-                    <span>{adults} adults, {children} children</span>
+                    <span>{adults} dewasa, {children} anak</span>
                   </div>
                 </div>
 
-                {/* Price Breakdown */}
+                {/* Rincian Harga */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span>Room ({nights} nights × ${room.roomType.price}):</span>
-                    <span>${room.roomType.price * nights}</span>
+                    <span>Kamar ({nights} malam × Rp {room.roomType.price.toLocaleString('id-ID')}):</span>
+                    <span>Rp {(room.roomType.price * nights).toLocaleString('id-ID')}</span>
                   </div>
                   
                   {selectedCharges.map(chargeId => {
@@ -403,7 +403,7 @@ export default function BookingPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Loading booking page...</p>
+          <p>Memuat halaman pemesanan...</p>
         </div>
       </div>
     }>
