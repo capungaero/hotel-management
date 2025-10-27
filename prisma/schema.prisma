@@ -1,0 +1,209 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomType {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  capacity    Int
+  amenities   String? // JSON string of amenities
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rooms       Room[]
+}
+
+model Room {
+  id         String   @id @default(cuid())
+  roomNumber String   @unique
+  roomTypeId String
+  floor      Int
+  status     String   @default("available") // available, occupied, maintenance
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+  bookings   Booking[]
+  maintenanceTasks MaintenanceTask[]
+  housekeepingAssignments HousekeepingAssignment[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Booking {
+  id           String   @id @default(cuid())
+  guestName    String
+  guestEmail   String
+  guestPhone   String
+  roomId       String
+  room         Room     @relation(fields: [roomId], references: [id])
+  checkInDate  DateTime
+  checkOutDate DateTime
+  adults       Int
+  children     Int      @default(0)
+  totalPrice   Float
+  status       String   @default("pending") // pending, confirmed, checked_in, checked_out, cancelled
+  specialRequests String?
+  payments     Payment[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+  amount    Float
+  method    String   // cash, card, transfer
+  status    String   @default("pending") // pending, completed, failed
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdditionalCharge {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  chargeType  String // per_night, per_stay, per_person
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BookingCharge {
+  id                String @id @default(cuid())
+  bookingId         String
+  additionalChargeId String
+  quantity          Int    @default(1)
+  price             Float
+  createdAt         DateTime @default(now())
+}
+
+model FinancialRecord {
+  id          String   @id @default(cuid())
+  type        String   // income, expense
+  category    String   // room_booking, additional_service, salary, maintenance, etc.
+  description String
+  amount      Float
+  date        DateTime
+  referenceId String?  // Can reference booking ID or other records
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Staff management for housekeeping and maintenance
+model Staff {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  phone       String?
+  position    String   // housekeeper, maintenance, supervisor
+  department  String   // housekeeping, maintenance
+  isActive    Boolean  @default(true)
+  hireDate    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       MaintenanceTask[]
+  assignments HousekeepingAssignment[]
+}
+
+// Maintenance task categories
+model MaintenanceCategory {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  color       String   @default("#3B82F6") // Color for calendar display
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       MaintenanceTask[]
+}
+
+// Maintenance tasks
+model MaintenanceTask {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  categoryId  String
+  category    MaintenanceCategory @relation(fields: [categoryId], references: [id])
+  priority    String    @default("medium") // low, medium, high, urgent
+  status      String    @default("pending") // pending, in_progress, completed, cancelled
+  assignedTo  String?   // Staff ID
+  staff       Staff?    @relation(fields: [assignedTo], references: [id])
+  roomId      String?   // Room ID if task is for specific room
+  room        Room?     @relation(fields: [roomId], references: [id])
+  scheduledDate DateTime @default(now())
+  dueDate     DateTime?
+  completedAt DateTime?
+  estimatedHours Float?
+  actualHours    Float?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Housekeeping task templates
+model HousekeepingTask {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  category    String   // bathroom, bedroom, public_area, etc.
+  estimatedTime Int    // in minutes
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assignments HousekeepingAssignment[]
+}
+
+// Daily housekeeping assignments
+model HousekeepingAssignment {
+  id          String   @id @default(cuid())
+  taskId      String
+  task        HousekeepingTask @relation(fields: [taskId], references: [id])
+  assignedTo  String   // Staff ID
+  staff       Staff    @relation(fields: [assignedTo], references: [id])
+  roomId      String?  // Room ID if task is for specific room
+  room        Room?    @relation(fields: [roomId], references: [id])
+  scheduledDate DateTime @default(now())
+  status      String   @default("pending") // pending, in_progress, completed, skipped
+  priority    String   @default("medium") // low, medium, high
+  completedAt DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Maintenance schedule (recurring tasks)
+model MaintenanceSchedule {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  categoryId  String
+  frequency   String   // daily, weekly, monthly, quarterly, yearly
+  interval    Int      @default(1) // Every X days/weeks/months
+  priority    String   @default("medium")
+  assignedTo  String?  // Default assigned staff
+  isActive    Boolean  @default(true)
+  lastCompleted DateTime?
+  nextDue     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
